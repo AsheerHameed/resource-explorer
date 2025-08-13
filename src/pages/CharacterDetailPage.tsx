@@ -76,7 +76,7 @@ const CharacterDetailPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-sm my-8">
-      <div className="bg-white rounded-lg shadow-sm p-6 flex flex-col lg:flex-row gap-6">
+      <div className="bg-white rounded-lg shadow-sm p-6 flex flex-col lg:flex-row gap-6 items-center">
         <div className="relative flex-shrink-0">
           <img
             src={character.image}
@@ -151,17 +151,9 @@ const CharacterDetailPage = () => {
   );
 };
 
-const DetailItem = ({
-  icon,
-  label,
-  value,
-}: {
-  icon?: string;
-  label: string;
-  value: string;
-}) => (
-  <div className="flex items-center gap-2">
-    {icon && <img src={icon} alt={label} className="w-5 h-5 flex-shrink-0" />}
+const DetailItem = ({ icon, label, value }: { icon?: string; label: string; value: string }) => (
+  <div className="grid grid-cols-[auto,1fr] items-center gap-2">
+    {icon && <img src={icon} alt={label} className="w-5 h-5 flex-shrink" />}
     <div>
       <p className="text-gray-500">{label}:</p>
       <p className="font-medium text-gray-900">{value}</p>
