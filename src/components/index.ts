@@ -1,8 +1,7 @@
-import CharacterCard from "./CharacterCard";
-import FavoritesToggle from "./FavoritesToggle";
-import Filters from "./Filters";
-import Loader from "./Loader";
-import SearchBar from "./SearchBar";
-import SortDropdown from "./SortDropdown";
-
-export default {CharacterCard,FavoritesToggle,Filters,Loader,SearchBar,SortDropdown}
+export { default as Header } from "./layout/Header";
+export { default as Footer } from "./layout/Footer";
+export { default as CharacterCard } from "./CharacterCard";
+export { default as Filter } from "./Filters";
+export { default as Loader } from "./Loader";
+export { default as SortDropdown } from "./SortDropdown";
+export { default as StatusFilter } from "./StatusFilter";

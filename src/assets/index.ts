@@ -1,0 +1,11 @@
+export { default as lifelineIcon } from "./icons/lifeline.png";
+export { default as locationIcon } from "./icons/location.png";
+export { default as speciesIcon } from "./icons/species.png";
+export { default as genderIcon } from "./icons/gender.png";
+export { default as typeIcon } from "./icons/type.png";
+export { default as originIcon } from "./icons/origin.png";
+export { default as episodeIcon } from "./icons/episodes.png";
+export { default as heartIcon } from "./icons/heart.png";
+export { default as heartFilledIcon } from "./icons/heart-filled.png";
+export { default as createdIcon } from "./icons/created.png";
+export { default as headerLogo } from "./header-logo.png";
