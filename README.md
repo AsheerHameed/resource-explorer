@@ -1,69 +1,76 @@
-# React + TypeScript + Vite
+Character Explorer
+Small react app to browse and search Rick & Morty characters using the public Rick & Morty API.
+You can search, filter, sort and also add characters to favorites to view later.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Features
+List all characters with infinite scroll
 
-Currently, two official plugins are available:
+Detail page with full info for each character
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Debounced search with URL sync
 
-## Expanding the ESLint configuration
+Status filter and sort options (name/species)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Favorites toggle from list and detail, saved in localStorage
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Persist state in URL so page reload or sharing keeps current view
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Loading and error states with retry button
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Cancel in‑flight reqs to avoid race issues
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Some other small things:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Basic a11y with alt texts and buttons label
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Responsive layout with Tailwind
+
+Reusable components + barrel exports for cleaner imports
+
+Folder structure
+text
+src/
+  assets/
+    icons/            # all .png svg icons, exported from icons/index.ts
+  components/         # reusable UI (Filter, CharacterCard, Loader, etc)
+    Layout/           # Header and Footer component
+    index.ts          # barrel export
+  models/             # TS types for api data
+  pages/              # each main page
+    CharactersListPage.tsx
+    CharacterDetailPage.tsx
+    FavoritesPage.tsx
+  services/           # api calls
+    charactersService.ts
+    apiClient.ts
+  App.tsx
+  main.tsx
+I removed hooks/ and utils/ folders for now since not using them. Maybe in future can add back when there is real shared logic.
+
+How it works
+Data fetching: services/charactersService.ts wraps axios calls to Rick & Morty API. fetchCharacters supports filters (page, name, status) via URLSearchParams. Supports abort via AbortController.
+
+List page: Reads params from URL using useSearchParams, triggers fetch. Infinite scroll with IntersectionObserver. Search input debounced to 500ms so we don't spam API.
+
+Detail page: Loads character by id, show extra details with icons and ability to fav/unfav.
+
+Favorites page: Loads list from localStorage ids, re-fetches full data, and allow filtering/sorting locally.
+
+Favorites storage: Just localStorage JSON array of char ids. Toggle instantly updates UI (optimistic).
+
+Run local
+bash
+npm install
+npm run dev
+Open http://localhost:5173 (default vite port) in browser.
+
+Tradeoffs / next steps
+Currently only have status filter, API also support species/gender which can be easy add.
+
+Sort is client side, API doesn’t give sort param.
+
+No react-query cache, data refetch on revisit.
+
+No custom hooks for now, logic mostly inline to keep it simple.
+
+Could add theme toggle or notes form on detail page as extra.
